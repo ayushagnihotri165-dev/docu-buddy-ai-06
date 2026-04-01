@@ -90,6 +90,7 @@ const Landing = () => {
             ))}
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link to="/auth">
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Sign In</Button>
             </Link>
