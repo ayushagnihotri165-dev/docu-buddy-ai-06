@@ -118,7 +118,7 @@ const Landing = () => {
             variants={fadeUp} initial="hidden" animate="visible" custom={1}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-6"
           >
-            Extract <span className="text-shimmer">insights</span>
+            Extract <TypingAnimation />
             <br />from any document
           </motion.h1>
           <motion.p
