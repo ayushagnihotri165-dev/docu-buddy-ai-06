@@ -474,12 +474,40 @@ ${Object.entries(result.entities).map(([key, values]) => `
                 whileHover={{ scale: 1.005 }}
                 className="glass rounded-2xl p-6 transition-all duration-300 hover:shadow-glow"
               >
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Sentiment</h3>
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.3 }}>
-                  <Badge className={`text-sm py-1.5 px-5 ${sentimentConfig[result.sentiment]?.bg || sentimentConfig.Neutral.bg}`}>
-                    {result.sentiment}
-                  </Badge>
-                </motion.div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Sentiment</h3>
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.3 }}>
+                      <Badge className={`text-sm py-1.5 px-5 ${sentimentConfig[result.sentiment]?.bg || sentimentConfig.Neutral.bg}`}>
+                        {result.sentiment}
+                      </Badge>
+                    </motion.div>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                      <Gauge className="w-3.5 h-3.5" /> Confidence
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 h-2.5 rounded-full bg-secondary overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${result.confidence || 0}%` }}
+                          transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                          className="h-full rounded-full bg-gradient-primary"
+                        />
+                      </div>
+                      <span className="text-sm font-bold text-primary">{result.confidence || 0}%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5" /> Language
+                    </h3>
+                    <Badge className="bg-secondary text-foreground border-border text-sm py-1.5 px-4">
+                      {result.language || "Unknown"}
+                    </Badge>
+                  </div>
+                </div>
               </motion.div>
 
               {/* Entities */}
