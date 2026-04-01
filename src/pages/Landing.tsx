@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Background3D from "@/components/Background3D";
+import ThemeToggle from "@/components/ThemeToggle";
+import TypingAnimation from "@/components/TypingAnimation";
 import {
   FileText, Brain, Shield, Zap, Layers, BarChart3,
   ArrowRight, Sparkles, ChevronRight, FileSearch, Download, History, Eye
@@ -88,6 +90,7 @@ const Landing = () => {
             ))}
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link to="/auth">
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Sign In</Button>
             </Link>
@@ -115,7 +118,7 @@ const Landing = () => {
             variants={fadeUp} initial="hidden" animate="visible" custom={1}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-6"
           >
-            Extract <span className="text-shimmer">insights</span>
+            Extract <TypingAnimation />
             <br />from any document
           </motion.h1>
           <motion.p
@@ -286,9 +289,12 @@ const Landing = () => {
     "names": ["Ravi Kumar"],
     "dates": ["10 March 2026"],
     "organizations": ["ABC Pvt Ltd"],
-    "amounts": ["₹10,000"]
+    "amounts": ["₹10,000"],
+    "locations": ["Mumbai, India"]
   },
-  "sentiment": "Neutral"
+  "sentiment": "Neutral",
+  "confidence": 94,
+  "language": "English"
 }`}
             </pre>
           </motion.div>

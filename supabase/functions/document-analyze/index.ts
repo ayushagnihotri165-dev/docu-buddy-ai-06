@@ -77,7 +77,7 @@ serve(async (req) => {
           type: "function",
           function: {
             name: "document_analysis",
-            description: "Extract summary, entities, and sentiment from a document",
+            description: "Extract summary, entities, sentiment, confidence, and language from a document",
             parameters: {
               type: "object",
               properties: {
@@ -107,17 +107,30 @@ serve(async (req) => {
                       type: "array",
                       items: { type: "string" },
                       description: "All monetary amounts mentioned in the document, with currency symbols"
+                    },
+                    locations: {
+                      type: "array",
+                      items: { type: "string" },
+                      description: "All location names (cities, countries, addresses, regions) mentioned in the document"
                     }
                   },
-                  required: ["names", "dates", "organizations", "amounts"]
+                  required: ["names", "dates", "organizations", "amounts", "locations"]
                 },
                 sentiment: {
                   type: "string",
                   enum: ["Positive", "Negative", "Neutral"],
                   description: "The overall sentiment of the document content"
+                },
+                confidence: {
+                  type: "number",
+                  description: "A confidence score between 0 and 100 indicating how confident the analysis is"
+                },
+                language: {
+                  type: "string",
+                  description: "The detected language of the document (e.g. English, Hindi, Spanish)"
                 }
               },
-              required: ["summary", "entities", "sentiment"]
+              required: ["summary", "entities", "sentiment", "confidence", "language"]
             }
           }
         }],
@@ -159,6 +172,8 @@ serve(async (req) => {
       summary: analysis.summary,
       entities: analysis.entities,
       sentiment: analysis.sentiment,
+      confidence: analysis.confidence,
+      language: analysis.language,
     }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -349,12 +364,15 @@ async function extractXMLFromZip(zipBytes: Uint8Array, targetFile: string): Prom
 function buildAIMessages(extractedText: string, fileName: string, isImage: boolean, fileBase64: string) {
   const systemPrompt = `You are an expert document analysis AI. Your task is to analyze documents and extract:
 1. A concise, accurate summary of the document content
-2. Named entities: person names, dates, organizations, and monetary amounts
+2. Named entities: person names, dates, organizations, monetary amounts, and locations
 3. Overall sentiment classification (Positive, Negative, or Neutral)
+4. A confidence score (0-100) indicating how confident you are in the analysis
+5. The detected language of the document
 
-Be thorough in entity extraction - find ALL names, dates, organizations, and monetary amounts.
+Be thorough in entity extraction - find ALL names, dates, organizations, monetary amounts, and locations.
 For sentiment, consider the overall tone and content of the document.
-For summary, be concise but capture all key points.`;
+For summary, be concise but capture all key points.
+For confidence, consider text quality, clarity, and completeness.`;
 
   if (isImage) {
     return [

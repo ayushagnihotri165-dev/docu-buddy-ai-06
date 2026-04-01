@@ -6,10 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Background3D from "@/components/Background3D";
+import ThemeToggle from "@/components/ThemeToggle";
 import {
   FileUp, Loader2, FileText, Image, File, Copy, CheckCircle2,
   LogOut, Sparkles, X, BarChart3, Users, Calendar, DollarSign,
-  Download, History, Trash2, Clock, ChevronDown, ChevronUp
+  Download, History, Trash2, Clock, ChevronDown, ChevronUp, MapPin, Globe, Gauge
 } from "lucide-react";
 
 interface AnalysisResult {
@@ -21,8 +22,11 @@ interface AnalysisResult {
     dates: string[];
     organizations: string[];
     amounts: string[];
+    locations: string[];
   };
   sentiment: string;
+  confidence: number;
+  language: string;
 }
 
 interface HistoryItem {
@@ -42,6 +46,7 @@ const entityIcons: Record<string, any> = {
   dates: Calendar,
   organizations: BarChart3,
   amounts: DollarSign,
+  locations: MapPin,
 };
 
 const entityColors: Record<string, string> = {
@@ -49,6 +54,7 @@ const entityColors: Record<string, string> = {
   dates: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   organizations: "bg-accent/10 text-accent border-accent/20",
   amounts: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  locations: "bg-sky-500/10 text-sky-400 border-sky-500/20",
 };
 
 const Dashboard = () => {
@@ -237,6 +243,8 @@ ${Object.entries(result.entities).map(([key, values]) => `
       summary: item.summary,
       entities: item.entities,
       sentiment: item.sentiment,
+      confidence: (item as any).confidence || 85,
+      language: (item as any).language || "Unknown",
     });
   };
 
@@ -273,6 +281,7 @@ ${Object.entries(result.entities).map(([key, values]) => `
             </div>
           </motion.div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <span className="text-xs text-muted-foreground hidden sm:block">{user.email}</span>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-muted-foreground gap-2">
@@ -467,12 +476,40 @@ ${Object.entries(result.entities).map(([key, values]) => `
                 whileHover={{ scale: 1.005 }}
                 className="glass rounded-2xl p-6 transition-all duration-300 hover:shadow-glow"
               >
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Sentiment</h3>
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.3 }}>
-                  <Badge className={`text-sm py-1.5 px-5 ${sentimentConfig[result.sentiment]?.bg || sentimentConfig.Neutral.bg}`}>
-                    {result.sentiment}
-                  </Badge>
-                </motion.div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Sentiment</h3>
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.3 }}>
+                      <Badge className={`text-sm py-1.5 px-5 ${sentimentConfig[result.sentiment]?.bg || sentimentConfig.Neutral.bg}`}>
+                        {result.sentiment}
+                      </Badge>
+                    </motion.div>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                      <Gauge className="w-3.5 h-3.5" /> Confidence
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 h-2.5 rounded-full bg-secondary overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${result.confidence || 0}%` }}
+                          transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                          className="h-full rounded-full bg-gradient-primary"
+                        />
+                      </div>
+                      <span className="text-sm font-bold text-primary">{result.confidence || 0}%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5" /> Language
+                    </h3>
+                    <Badge className="bg-secondary text-foreground border-border text-sm py-1.5 px-4">
+                      {result.language || "Unknown"}
+                    </Badge>
+                  </div>
+                </div>
               </motion.div>
 
               {/* Entities */}
@@ -482,7 +519,7 @@ ${Object.entries(result.entities).map(([key, values]) => `
               >
                 <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">Extracted Entities</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {(["names", "dates", "organizations", "amounts"] as const).map((key, gi) => {
+                  {(["names", "dates", "organizations", "amounts", "locations"] as const).map((key, gi) => {
                     const Icon = entityIcons[key];
                     return (
                       <motion.div
