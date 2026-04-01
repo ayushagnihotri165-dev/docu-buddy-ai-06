@@ -46,6 +46,7 @@ const entityIcons: Record<string, any> = {
   dates: Calendar,
   organizations: BarChart3,
   amounts: DollarSign,
+  locations: MapPin,
 };
 
 const entityColors: Record<string, string> = {
@@ -53,6 +54,7 @@ const entityColors: Record<string, string> = {
   dates: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   organizations: "bg-accent/10 text-accent border-accent/20",
   amounts: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  locations: "bg-sky-500/10 text-sky-400 border-sky-500/20",
 };
 
 const Dashboard = () => {
