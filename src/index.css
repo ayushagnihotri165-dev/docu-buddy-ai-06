@@ -100,6 +100,56 @@
   .glass-strong {
     @apply bg-card/80 backdrop-blur-2xl border border-border/60;
   }
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--foreground)) 0%,
+      hsl(160 84% 50%) 25%,
+      hsl(270 70% 65%) 50%,
+      hsl(200 90% 55%) 75%,
+      hsl(var(--foreground)) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* 3D Perspective Canvas */
+.scene-3d {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+}
+
+.plane-3d {
+  transform-style: preserve-3d;
+  animation: float3d 20s ease-in-out infinite;
+}
+
+@keyframes float3d {
+  0%, 100% { transform: rotateX(2deg) rotateY(-2deg) translateZ(0); }
+  25% { transform: rotateX(-1deg) rotateY(3deg) translateZ(20px); }
+  50% { transform: rotateX(3deg) rotateY(-1deg) translateZ(-10px); }
+  75% { transform: rotateX(-2deg) rotateY(2deg) translateZ(15px); }
+}
+
+/* 3D Grid Floor */
+.grid-3d {
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(hsl(160 84% 39% / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(160 84% 39% / 0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+  transform: rotateX(60deg) translateZ(-100px);
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 70%);
 }
 
 /* Mesh gradient background */
@@ -119,7 +169,7 @@
   z-index: 0;
 }
 
-/* Animated grid */
+/* Grid pattern */
 .grid-pattern {
   background-image:
     linear-gradient(hsl(225 14% 12% / 0.5) 1px, transparent 1px),
@@ -140,8 +190,46 @@
   animation: float 25s ease-in-out infinite reverse;
 }
 
+/* Particle float */
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; }
+  50% { transform: translateY(-40px) translateX(20px) scale(1.3); opacity: 0.8; }
+}
+.particle {
+  animation: particleFloat var(--duration, 6s) var(--delay, 0s) ease-in-out infinite;
+}
+
+/* Pulse ring */
+@keyframes pulseRing {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 0.2; }
+  100% { transform: scale(0.8); opacity: 0.6; }
+}
+.pulse-ring {
+  animation: pulseRing 3s ease-in-out infinite;
+}
+
+/* Color cycle text */
+@keyframes colorCycle {
+  0%, 100% { color: hsl(160 84% 50%); }
+  33% { color: hsl(270 70% 65%); }
+  66% { color: hsl(200 90% 55%); }
+}
+.color-cycle {
+  animation: colorCycle 6s ease-in-out infinite;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: hsl(225 25% 3%); }
 ::-webkit-scrollbar-thumb { background: hsl(225 14% 18%); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: hsl(225 14% 25%); }
+
+/* Glow border animation */
+@keyframes glowBorder {
+  0%, 100% { border-color: hsl(160 84% 39% / 0.3); }
+  50% { border-color: hsl(270 70% 60% / 0.3); }
+}
+.glow-border-animate {
+  animation: glowBorder 4s ease-in-out infinite;
+}
