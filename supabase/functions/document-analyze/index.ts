@@ -77,7 +77,7 @@ serve(async (req) => {
           type: "function",
           function: {
             name: "document_analysis",
-            description: "Extract summary, entities, and sentiment from a document",
+            description: "Extract summary, entities, sentiment, confidence, and language from a document",
             parameters: {
               type: "object",
               properties: {
@@ -107,17 +107,30 @@ serve(async (req) => {
                       type: "array",
                       items: { type: "string" },
                       description: "All monetary amounts mentioned in the document, with currency symbols"
+                    },
+                    locations: {
+                      type: "array",
+                      items: { type: "string" },
+                      description: "All location names (cities, countries, addresses, regions) mentioned in the document"
                     }
                   },
-                  required: ["names", "dates", "organizations", "amounts"]
+                  required: ["names", "dates", "organizations", "amounts", "locations"]
                 },
                 sentiment: {
                   type: "string",
                   enum: ["Positive", "Negative", "Neutral"],
                   description: "The overall sentiment of the document content"
+                },
+                confidence: {
+                  type: "number",
+                  description: "A confidence score between 0 and 100 indicating how confident the analysis is"
+                },
+                language: {
+                  type: "string",
+                  description: "The detected language of the document (e.g. English, Hindi, Spanish)"
                 }
               },
-              required: ["summary", "entities", "sentiment"]
+              required: ["summary", "entities", "sentiment", "confidence", "language"]
             }
           }
         }],
