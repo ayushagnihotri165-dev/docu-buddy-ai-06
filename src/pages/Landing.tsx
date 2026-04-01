@@ -3,10 +3,10 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Background3D from "@/components/Background3D";
 import {
   FileText, Brain, Shield, Zap, Layers, BarChart3,
-  ArrowRight, Sparkles, Globe, Lock, Clock,
-  ChevronRight, FileSearch, Users, Star
+  ArrowRight, Sparkles, ChevronRight, FileSearch, Download, History, Eye
 } from "lucide-react";
 
 const fadeUp = {
@@ -32,12 +32,15 @@ const features = [
   { icon: BarChart3, title: "Sentiment Analysis", desc: "Understand the emotional tone of documents with precise sentiment classification." },
   { icon: Shield, title: "Secure Processing", desc: "Enterprise-grade API key authentication with encrypted data transmission." },
   { icon: Zap, title: "Real-time Results", desc: "Get instant analysis results with our optimized processing pipeline." },
+  { icon: Download, title: "PDF Reports", desc: "Download beautifully formatted PDF reports of your document analysis." },
+  { icon: History, title: "Analysis History", desc: "Access your previous analyses anytime from your personalized dashboard." },
+  { icon: Eye, title: "Live Preview", desc: "See real-time extraction results as documents are being processed." },
 ];
 
 const steps = [
   { num: "01", title: "Upload Document", desc: "Drag & drop or browse to upload your PDF, DOCX, or image file." },
   { num: "02", title: "AI Processing", desc: "Our AI engine extracts text, analyzes content, and identifies key entities." },
-  { num: "03", title: "Get Insights", desc: "Receive a structured JSON response with summary, entities, and sentiment." },
+  { num: "03", title: "Get Insights", desc: "Receive structured results with summary, entities, sentiment, and download as PDF." },
 ];
 
 const stats = [
@@ -54,13 +57,8 @@ const Landing = () => {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <div className="min-h-screen bg-background mesh-bg">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="orb absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-3xl" />
-        <div className="orb-delayed absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-accent/[0.03] blur-3xl" />
-        <div className="orb absolute bottom-0 left-1/3 w-[400px] h-[400px] rounded-full bg-primary/[0.02] blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-background">
+      <Background3D />
 
       {/* Navbar */}
       <motion.nav
@@ -70,26 +68,35 @@ const Landing = () => {
         className="fixed top-0 left-0 right-0 z-50 glass-strong"
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
             <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
               <FileText className="w-4.5 h-4.5 text-primary-foreground" />
             </div>
             <span className="text-lg font-bold tracking-tight font-['Space_Grotesk']">DocAnalyzer</span>
             <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] font-medium">v2.0</Badge>
-          </div>
+          </motion.div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-            <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
-            <a href="#api" className="text-sm text-muted-foreground hover:text-foreground transition-colors">API</a>
+            {["Features", "How It Works", "API"].map((item) => (
+              <motion.a
+                key={item}
+                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors relative"
+                whileHover={{ y: -1 }}
+              >
+                {item}
+              </motion.a>
+            ))}
           </div>
           <div className="flex items-center gap-3">
             <Link to="/auth">
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Sign In</Button>
             </Link>
             <Link to="/auth?mode=signup">
-              <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow text-primary-foreground">
-                Get Started <ArrowRight className="w-3.5 h-3.5" />
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow text-primary-foreground">
+                  Get Started <ArrowRight className="w-3.5 h-3.5" />
+                </Button>
+              </motion.div>
             </Link>
           </div>
         </div>
@@ -97,10 +104,10 @@ const Landing = () => {
 
       {/* Hero */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="absolute inset-0 grid-pattern opacity-20" />
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}>
-            <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 py-1.5 px-4 text-xs font-medium">
+            <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 py-1.5 px-4 text-xs font-medium glow-border-animate">
               <Sparkles className="w-3 h-3 mr-1.5" /> AI-Powered Document Intelligence
             </Badge>
           </motion.div>
@@ -108,7 +115,7 @@ const Landing = () => {
             variants={fadeUp} initial="hidden" animate="visible" custom={1}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-6"
           >
-            Extract <span className="text-gradient-primary">insights</span>
+            Extract <span className="text-shimmer">insights</span>
             <br />from any document
           </motion.h1>
           <motion.p
@@ -119,14 +126,18 @@ const Landing = () => {
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/auth?mode=signup">
-              <Button size="lg" className="bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow text-primary-foreground text-base px-8 h-13">
-                Start Analyzing <ArrowRight className="w-4 h-4" />
-              </Button>
+              <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                <Button size="lg" className="bg-gradient-primary hover:opacity-90 transition-all shadow-glow text-primary-foreground text-base px-8 h-13">
+                  Start Analyzing <ArrowRight className="w-4 h-4" />
+                </Button>
+              </motion.div>
             </Link>
             <a href="#api">
-              <Button size="lg" variant="outline" className="border-border/80 hover:bg-secondary text-base px-8 h-13">
-                View API Docs <ChevronRight className="w-4 h-4" />
-              </Button>
+              <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                <Button size="lg" variant="outline" className="border-border/80 hover:bg-secondary text-base px-8 h-13">
+                  View API Docs <ChevronRight className="w-4 h-4" />
+                </Button>
+              </motion.div>
             </a>
           </motion.div>
 
@@ -137,9 +148,10 @@ const Landing = () => {
           >
             {stats.map((s, i) => (
               <motion.div key={i} variants={scaleIn} initial="hidden" animate="visible" custom={i + 5}
-                className="glass rounded-2xl p-5 text-center"
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="glass rounded-2xl p-5 text-center transition-all duration-300 hover:shadow-glow"
               >
-                <div className="text-2xl md:text-3xl font-bold text-gradient-primary">{s.value}</div>
+                <div className="text-2xl md:text-3xl font-bold color-cycle">{s.value}</div>
                 <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
               </motion.div>
             ))}
@@ -167,11 +179,16 @@ const Landing = () => {
                 key={i}
                 variants={scaleIn} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                 custom={i}
-                className="group glass rounded-2xl p-7 hover:border-primary/30 transition-all duration-500 hover:shadow-glow"
+                whileHover={{ scale: 1.03, y: -6 }}
+                className="group glass rounded-2xl p-7 hover:border-primary/30 transition-all duration-500 hover:shadow-glow cursor-default"
               >
-                <div className="w-11 h-11 rounded-xl bg-gradient-primary/10 flex items-center justify-center mb-5 group-hover:shadow-glow transition-shadow">
+                <motion.div
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.5 }}
+                  className="w-11 h-11 rounded-xl bg-gradient-primary/10 flex items-center justify-center mb-5 group-hover:shadow-glow transition-shadow"
+                >
                   <f.icon className="w-5 h-5 text-primary" />
-                </div>
+                </motion.div>
                 <h3 className="text-lg font-semibold mb-2 tracking-tight">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </motion.div>
@@ -197,14 +214,17 @@ const Landing = () => {
                 key={i}
                 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
                 custom={i}
-                className="relative"
+                whileHover={{ y: -8 }}
+                className="relative glass rounded-2xl p-8 transition-all duration-300 hover:shadow-glow"
               >
                 <div className="text-6xl font-bold text-gradient-primary opacity-20 mb-4">{s.num}</div>
                 <h3 className="text-xl font-semibold mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 {i < 2 && (
-                  <div className="hidden md:block absolute top-8 -right-4 w-8">
-                    <ArrowRight className="w-5 h-5 text-muted-foreground/30" />
+                  <div className="hidden md:block absolute top-12 -right-6 z-20">
+                    <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                      <ArrowRight className="w-5 h-5 text-primary/40" />
+                    </motion.div>
                   </div>
                 )}
               </motion.div>
@@ -226,6 +246,7 @@ const Landing = () => {
           </motion.div>
           <motion.div
             variants={scaleIn} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0}
+            whileHover={{ scale: 1.01 }}
             className="glass rounded-2xl p-6 overflow-hidden"
           >
             <div className="flex items-center gap-2 mb-4">
@@ -247,6 +268,7 @@ const Landing = () => {
           </motion.div>
           <motion.div
             variants={scaleIn} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
+            whileHover={{ scale: 1.01 }}
             className="glass rounded-2xl p-6 mt-5 overflow-hidden"
           >
             <div className="flex items-center gap-2 mb-4">
@@ -279,7 +301,7 @@ const Landing = () => {
           initial="hidden" whileInView="visible" viewport={{ once: true }}
           className="max-w-4xl mx-auto text-center"
         >
-          <motion.div variants={scaleIn} custom={0} className="glass rounded-3xl p-12 md:p-16 relative overflow-hidden">
+          <motion.div variants={scaleIn} custom={0} className="glass rounded-3xl p-12 md:p-16 relative overflow-hidden glow-border-animate">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
             <div className="relative z-10">
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
@@ -289,9 +311,11 @@ const Landing = () => {
                 Create your account and start extracting insights from documents in seconds.
               </p>
               <Link to="/auth?mode=signup">
-                <Button size="lg" className="bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow text-primary-foreground text-base px-10 h-13">
-                  Create Free Account <ArrowRight className="w-4 h-4" />
-                </Button>
+                <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} className="inline-block">
+                  <Button size="lg" className="bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow text-primary-foreground text-base px-10 h-13">
+                    Create Free Account <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </motion.div>
               </Link>
             </div>
           </motion.div>
