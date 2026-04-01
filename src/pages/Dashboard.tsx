@@ -243,6 +243,8 @@ ${Object.entries(result.entities).map(([key, values]) => `
       summary: item.summary,
       entities: item.entities,
       sentiment: item.sentiment,
+      confidence: (item as any).confidence || 85,
+      language: (item as any).language || "Unknown",
     });
   };
 
