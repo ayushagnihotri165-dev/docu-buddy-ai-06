@@ -22,8 +22,11 @@ interface AnalysisResult {
     dates: string[];
     organizations: string[];
     amounts: string[];
+    locations: string[];
   };
   sentiment: string;
+  confidence: number;
+  language: string;
 }
 
 interface HistoryItem {
