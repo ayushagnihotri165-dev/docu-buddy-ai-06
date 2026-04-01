@@ -289,9 +289,12 @@ const Landing = () => {
     "names": ["Ravi Kumar"],
     "dates": ["10 March 2026"],
     "organizations": ["ABC Pvt Ltd"],
-    "amounts": ["₹10,000"]
+    "amounts": ["₹10,000"],
+    "locations": ["Mumbai, India"]
   },
-  "sentiment": "Neutral"
+  "sentiment": "Neutral",
+  "confidence": 94,
+  "language": "English"
 }`}
             </pre>
           </motion.div>
