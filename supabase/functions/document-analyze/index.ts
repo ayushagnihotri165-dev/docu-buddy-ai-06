@@ -172,6 +172,8 @@ serve(async (req) => {
       summary: analysis.summary,
       entities: analysis.entities,
       sentiment: analysis.sentiment,
+      confidence: analysis.confidence,
+      language: analysis.language,
     }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
