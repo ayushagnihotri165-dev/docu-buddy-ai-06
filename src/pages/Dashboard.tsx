@@ -577,6 +577,7 @@ ${Object.entries(result.entities).map(([key, values]) => `
           )}
         </AnimatePresence>
       </main>
+      <AIAssistant />
     </div>
   );
 };
