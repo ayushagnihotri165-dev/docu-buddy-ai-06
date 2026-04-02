@@ -123,14 +123,20 @@ const Dashboard = () => {
   const getFileType = (f: File): string => {
     const ext = f.name.split(".").pop()?.toLowerCase();
     if (ext === "pdf") return "pdf";
-    if (ext === "docx") return "docx";
-    if (["png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff"].includes(ext || "")) return "image";
+    if (["docx", "doc"].includes(ext || "")) return "docx";
+    if (["xlsx", "xls", "csv"].includes(ext || "")) return "spreadsheet";
+    if (["pptx", "ppt"].includes(ext || "")) return "presentation";
+    if (["txt", "rtf", "md", "html", "xml", "json"].includes(ext || "")) return "text";
+    if (["png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "svg"].includes(ext || "")) return "image";
     return "unknown";
   };
 
   const getFileIcon = (type: string) => {
     if (type === "pdf") return <FileText className="w-5 h-5" />;
     if (type === "image") return <Image className="w-5 h-5" />;
+    if (type === "spreadsheet") return <FileSpreadsheet className="w-5 h-5" />;
+    if (type === "presentation") return <Presentation className="w-5 h-5" />;
+    if (type === "text") return <FileCode className="w-5 h-5" />;
     return <File className="w-5 h-5" />;
   };
 
