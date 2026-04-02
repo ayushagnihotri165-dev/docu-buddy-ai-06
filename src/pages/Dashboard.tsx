@@ -338,7 +338,7 @@ ${Object.entries(result.entities).map(([key, values]) => `
               ) : (
                 <>
                   <p className="text-muted-foreground mb-1 font-medium">Drop a document here or click to browse</p>
-                  <p className="text-xs text-muted-foreground">Supports PDF, DOCX, PNG, JPG, JPEG, GIF, BMP, WebP, TIFF</p>
+                  <p className="text-xs text-muted-foreground">Supports PDF, DOCX, XLSX, PPTX, TXT, CSV, RTF, PNG, JPG, and more</p>
                 </>
               )}
             </div>
