@@ -442,6 +442,11 @@ ${Object.entries(result.entities).map(([key, values]) => `
           )}
         </AnimatePresence>
 
+        {/* Loading Skeleton */}
+        <AnimatePresence>
+          {loading && !result && <AnalysisSkeleton />}
+        </AnimatePresence>
+
         {/* Results */}
         <AnimatePresence>
           {result && (
