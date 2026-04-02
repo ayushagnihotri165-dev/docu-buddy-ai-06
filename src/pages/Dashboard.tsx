@@ -7,10 +7,13 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Background3D from "@/components/Background3D";
 import ThemeToggle from "@/components/ThemeToggle";
+import AIAssistant from "@/components/AIAssistant";
+import AnalysisSkeleton from "@/components/AnalysisSkeleton";
 import {
   FileUp, Loader2, FileText, Image, File, Copy, CheckCircle2,
   LogOut, Sparkles, X, BarChart3, Users, Calendar, DollarSign,
-  Download, History, Trash2, Clock, ChevronDown, ChevronUp, MapPin, Globe, Gauge
+  Download, History, Trash2, Clock, ChevronDown, ChevronUp, MapPin, Globe, Gauge,
+  FileSpreadsheet, Presentation, FileCode
 } from "lucide-react";
 
 interface AnalysisResult {
