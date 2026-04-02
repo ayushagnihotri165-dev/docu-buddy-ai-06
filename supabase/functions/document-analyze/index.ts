@@ -31,9 +31,9 @@ serve(async (req) => {
       });
     }
 
-    const validTypes = ["pdf", "docx", "image"];
+    const validTypes = ["pdf", "docx", "image", "spreadsheet", "presentation", "text"];
     if (!validTypes.includes(fileType.toLowerCase())) {
-      return new Response(JSON.stringify({ status: "error", message: "Invalid fileType. Must be pdf, docx, or image" }), {
+      return new Response(JSON.stringify({ status: "error", message: "Invalid fileType. Must be pdf, docx, image, spreadsheet, presentation, or text" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
