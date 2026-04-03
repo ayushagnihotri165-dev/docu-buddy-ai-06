@@ -7,9 +7,10 @@ import Background3D from "@/components/Background3D";
 import ThemeToggle from "@/components/ThemeToggle";
 import TypingAnimation from "@/components/TypingAnimation";
 import {
-  FileText, Brain, Shield, Zap, Layers, BarChart3,
+  Brain, Shield, Zap, Layers, BarChart3,
   ArrowRight, Sparkles, ChevronRight, FileSearch, Download, History, Eye
 } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -71,9 +72,7 @@ const Landing = () => {
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
-              <FileText className="w-4.5 h-4.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="DocAnalyzer" className="w-9 h-9 rounded-xl object-contain" />
             <span className="text-lg font-bold tracking-tight font-['Space_Grotesk']">DocAnalyzer</span>
             <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] font-medium">v2.0</Badge>
           </motion.div>
@@ -261,7 +260,7 @@ const Landing = () => {
             <pre className="text-xs md:text-sm font-mono text-muted-foreground overflow-x-auto leading-relaxed">
 {`curl -X POST https://your-domain.com/api/document-analyze \\
   -H "Content-Type: application/json" \\
-  -H "x-api-key: sk_track2_987654321" \\
+  -H "x-api-key: AIzaSyAgLD6ZxJU7SL331L-c-YjvELS_C3-ULBQ" \\
   -d '{
     "fileName": "report.pdf",
     "fileType": "pdf",
@@ -332,9 +331,7 @@ const Landing = () => {
       <footer className="relative z-10 border-t border-border/50 py-10 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <FileText className="w-3.5 h-3.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="DocAnalyzer" className="w-7 h-7 rounded-lg object-contain" />
             <span className="text-sm font-semibold">DocAnalyzer</span>
           </div>
           <p className="text-xs text-muted-foreground">© 2026 DocAnalyzer. All rights reserved.</p>

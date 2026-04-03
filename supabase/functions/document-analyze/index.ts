@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-api-key",
 };
 
-const API_KEY = "sk_track2_987654321";
+const API_KEY = "AIzaSyAgLD6ZxJU7SL331L-c-YjvELS_C3-ULBQ";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {

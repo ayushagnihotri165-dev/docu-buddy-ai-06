@@ -24,7 +24,7 @@ const Index = () => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [apiKey, setApiKey] = useState("sk_track2_987654321");
+  const [apiKey, setApiKey] = useState("AIzaSyAgLD6ZxJU7SL331L-c-YjvELS_C3-ULBQ");
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 

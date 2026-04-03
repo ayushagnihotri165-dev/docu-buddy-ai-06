@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import logoImg from "@/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -72,7 +73,7 @@ const Dashboard = () => {
   const [loadingHistory, setLoadingHistory] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const apiKey = "sk_track2_987654321";
+  const apiKey = "AIzaSyAgLD6ZxJU7SL331L-c-YjvELS_C3-ULBQ";
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
@@ -281,9 +282,7 @@ ${Object.entries(result.entities).map(([key, values]) => `
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.02 }}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
-              <FileText className="w-4.5 h-4.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="DocAnalyzer" className="w-9 h-9 rounded-xl object-contain" />
             <div>
               <span className="text-lg font-bold tracking-tight font-['Space_Grotesk']">DocAnalyzer</span>
               <span className="text-xs text-muted-foreground ml-2">Dashboard</span>
