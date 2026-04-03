@@ -260,7 +260,7 @@ const Landing = () => {
             <pre className="text-xs md:text-sm font-mono text-muted-foreground overflow-x-auto leading-relaxed">
 {`curl -X POST https://your-domain.com/api/document-analyze \\
   -H "Content-Type: application/json" \\
-  -H "x-api-key: sk_track2_987654321" \\
+  -H "x-api-key: AIzaSyAgLD6ZxJU7SL331L-c-YjvELS_C3-ULBQ" \\
   -d '{
     "fileName": "report.pdf",
     "fileType": "pdf",
