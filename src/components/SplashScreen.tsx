@@ -156,7 +156,7 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                   className="absolute inset-0 rounded-2xl border border-primary-foreground/10"
                 />
-                <FileText className="w-12 h-12 text-primary-foreground relative z-10" />
+                <img src={logoImg} alt="DocAnalyzer" className="w-16 h-16 rounded-lg relative z-10 object-contain" />
               </motion.div>
 
               {/* Expanding ring burst */}
