@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import logoImg from "@/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
