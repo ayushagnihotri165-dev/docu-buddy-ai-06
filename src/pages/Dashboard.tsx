@@ -281,9 +281,7 @@ ${Object.entries(result.entities).map(([key, values]) => `
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.02 }}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
-              <FileText className="w-4.5 h-4.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="DocAnalyzer" className="w-9 h-9 rounded-xl object-contain" />
             <div>
               <span className="text-lg font-bold tracking-tight font-['Space_Grotesk']">DocAnalyzer</span>
               <span className="text-xs text-muted-foreground ml-2">Dashboard</span>
